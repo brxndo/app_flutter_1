@@ -1,84 +1,41 @@
+import 'package:app_flutter_1/models/menu_options.dart';
+import 'package:app_flutter_1/router/app_router.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  static List<MenuOptions> listaMenu = AppRouter.menuOption;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text("Mi Tercera App"),
-          backgroundColor: Color.fromARGB(255, 41, 30, 75),
-          actions: [
-            PopupMenuButton(itemBuilder: (context) {
-              return [
-                const PopupMenuItem<int>(
-                  value: 0,
-                  child: Text("Mi Cuenta"),
-                ),
-                const PopupMenuItem<int>(value: 1, child: Text("Opciones")),
-                const PopupMenuItem<int>(value: 2, child: Text("Salir"))
-              ];
-            })
-          ]),
-      body: const MyForm(),
-      //  Container(
-      //   padding: const EdgeInsets.all(20),
-      //   child: Center(
-      //       child: Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      // crossAxisAlignment: CrossAxisAlignment.center,
-      // children: [
-      //   Row(
-      //     children: const <Widget>[
-      //       Expanded(
-      //         child: TextButton(
-      //           onPressed: (null),
-      //           child: Text('Boton 1'),
-      //         ),
-      //       ),
-      //       const SizedBox(
-      //         height: 10,
-      //       ),
-      //       Expanded(
-      //         child: TextButton(
-      //           onPressed: (null),
-      //           child: Text('Boton 2'),
-      //         ),
-      //       ),
-      //       const SizedBox(
-      //         height: 10,
-      //       ),
-      //       Expanded(
-      //         child: TextButton(
-      //           onPressed: (null),
-      //           child: Text('Boton 3'),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      //   Text("Haga clic para continuar: "),
-      //   const SizedBox(
-      //     height: 30,
-      //   ),
-      //   TextButton(
-      //     child: const Text('Comprar'),
-      //     onPressed: null,
-      //   ),
-      //   const SizedBox(
-      //     height: 30,
-      //   ),
-      // ],
-      bottomNavigationBar: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          child: Container(
-            height: 50,
-          )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (() => {}),
-        tooltip: 'Increment Counter',
-        child: const Icon(Icons.add_photo_alternate),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
+        appBar: AppBar(
+            title: const Text("Componentes de Flutter"),
+            elevation: 10,
+            actions: [
+              PopupMenuButton(itemBuilder: (context) {
+                return [
+                  const PopupMenuItem<int>(
+                    value: 0,
+                    child: Text("Mi Cuenta"),
+                  ),
+                  const PopupMenuItem<int>(value: 1, child: Text("Opciones")),
+                  const PopupMenuItem<int>(value: 2, child: Text("Salir"))
+                ];
+              })
+            ]),
+        body: ListView.separated(
+          itemBuilder: (context, index) => ListTile(
+            title: Text(listaMenu[index].nombre),
+            leading: Icon(listaMenu[index].icono),
+            onTap: () {
+              Navigator.pushNamed(context, listaMenu[index].route);
+            },
+          ),
+          separatorBuilder: (context, index) => const Divider(),
+          itemCount: AppRouter.menuOption.length,
+        ));
   }
 }
 
