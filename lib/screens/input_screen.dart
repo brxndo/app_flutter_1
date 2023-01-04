@@ -72,8 +72,10 @@ class InputScreen extends StatelessWidget {
                     FocusScope.of(context).requestFocus(FocusNode());
 
                     if (!formularioRegistro.currentState!.validate()) {
-                      print("Formulario no valido");
-                      return;
+                      _mostrarDialogo(context, "Formulario no valido", "Error");
+                    } else {
+                      _mostrarDialogo(
+                          context, "Guardado correctamente", "Felicitaciones");
                     }
                     print(valores);
                   }),
@@ -84,5 +86,26 @@ class InputScreen extends StatelessWidget {
             ]),
           ),
         )));
+  }
+
+  void _mostrarDialogo(BuildContext context, String mensaje, String tipo) {
+    showDialog(
+        context: context,
+        builder: ((context) {
+          return AlertDialog(
+            title: Text(tipo),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [Text(mensaje)],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: (() {
+                    Navigator.pop(context);
+                  }),
+                  child: const Text("Cerrar"))
+            ],
+          );
+        }));
   }
 }
