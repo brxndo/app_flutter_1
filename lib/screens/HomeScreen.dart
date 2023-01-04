@@ -10,66 +10,63 @@ class HomeScreen extends StatelessWidget {
           actions: [
             PopupMenuButton(itemBuilder: (context) {
               return [
-                PopupMenuItem<int>(
+                const PopupMenuItem<int>(
                   value: 0,
                   child: Text("Mi Cuenta"),
                 ),
-                PopupMenuItem<int>(value: 1, child: Text("Opciones")),
-                PopupMenuItem<int>(value: 2, child: Text("Salir"))
+                const PopupMenuItem<int>(value: 1, child: Text("Opciones")),
+                const PopupMenuItem<int>(value: 2, child: Text("Salir"))
               ];
             })
           ]),
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              children: const <Widget>[
-                Expanded(
-                  child: TextButton(
-                    onPressed: (null),
-                    child: Text('Boton 1'),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: TextButton(
-                    onPressed: (null),
-                    child: Text('Boton 2'),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: TextButton(
-                    onPressed: (null),
-                    child: Text('Boton 3'),
-                  ),
-                ),
-              ],
-            ),
-            Text("Haga clic para continuar: "),
-            const SizedBox(
-              height: 30,
-            ),
-            TextButton(
-              child: const Text('Comprar'),
-              onPressed: null,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-          ],
-        )),
-      ),
-
-      /*MyCard()*/
+      body: const MyForm(),
+      //  Container(
+      //   padding: const EdgeInsets.all(20),
+      //   child: Center(
+      //       child: Column(
+      // mainAxisAlignment: MainAxisAlignment.center,
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      // children: [
+      //   Row(
+      //     children: const <Widget>[
+      //       Expanded(
+      //         child: TextButton(
+      //           onPressed: (null),
+      //           child: Text('Boton 1'),
+      //         ),
+      //       ),
+      //       const SizedBox(
+      //         height: 10,
+      //       ),
+      //       Expanded(
+      //         child: TextButton(
+      //           onPressed: (null),
+      //           child: Text('Boton 2'),
+      //         ),
+      //       ),
+      //       const SizedBox(
+      //         height: 10,
+      //       ),
+      //       Expanded(
+      //         child: TextButton(
+      //           onPressed: (null),
+      //           child: Text('Boton 3'),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      //   Text("Haga clic para continuar: "),
+      //   const SizedBox(
+      //     height: 30,
+      //   ),
+      //   TextButton(
+      //     child: const Text('Comprar'),
+      //     onPressed: null,
+      //   ),
+      //   const SizedBox(
+      //     height: 30,
+      //   ),
+      // ],
       bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
           child: Container(
@@ -82,6 +79,67 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
+  }
+}
+
+class MyForm extends StatefulWidget {
+  const MyForm({super.key});
+
+  @override
+  State<MyForm> createState() => _MyForm();
+}
+
+class _MyForm extends State<MyForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Ingrese su email',
+              ),
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Debe ingresar un texto';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Ingrese su contraseña',
+              ),
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Debe ingresar un texto';
+                }
+                return null;
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Validate will return true if the form is valid, or false if
+                  // the form is invalid.
+                  if (_formKey.currentState!.validate()) {
+                    // Process data.
+                  }
+                },
+                child: const Text('Enviar'),
+              ),
+            ),
+          ],
+        ));
   }
 }
 
